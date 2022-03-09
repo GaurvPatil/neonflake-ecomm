@@ -2,9 +2,11 @@ import "./App.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Header from "./components/Header";
 import Home from "./pages/Home";
-import SingleProduct from "./pages/SingleProduct";
+
 import Cart from "./pages/Cart";
 import Auth from "./pages/Auth";
+import Admin from "./pages/Admin";
+import Buy from "./pages/Buy";
 
 function App() {
   return (
@@ -14,9 +16,11 @@ function App() {
 
         <Routes>
           <Route path="/" element={<Home />} exact />
-          <Route path="/product/:id" element={<SingleProduct />} />
+
           <Route path="/cart" element={<Cart />} />
           <Route path="/auth" element={<Auth />} />
+          <Route path="/admin" element={<Admin />} />
+          <Route path="/buy/:id" element={<Buy />} />
         </Routes>
       </Router>
     </>
