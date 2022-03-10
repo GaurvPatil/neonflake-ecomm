@@ -55,7 +55,7 @@ const Home = () => {
       <MediaCard allProduct={newArray} />
       {/* pagination from material ui  */}
       <Pagination
-        count={parseInt(( product.length / 2.5).toFixed(0))}
+        count={parseInt(( product.length / 3.5).toFixed(0))}
         style={{
           padding: 20,
           width: "100%",

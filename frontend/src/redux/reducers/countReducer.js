@@ -1,13 +1,9 @@
 import { COUNT, ADDCART, REMOVECART } from "../actionTypes/actionTypes";
 
-
-const initialState = localStorage.getItem("profile") && localStorage.getItem("cartItems")
-        ? JSON.parse(localStorage.getItem("cartItems"))
-        : [];
-
-     
-     
-
+const initialState =
+  localStorage.getItem("profile") && localStorage.getItem("cartItems")
+    ? JSON.parse(localStorage.getItem("cartItems"))
+    : [];
 
 const countReducer = (state = initialState.length, action) => {
   switch (action.type) {
@@ -27,7 +23,7 @@ const countReducer = (state = initialState.length, action) => {
       } else {
         cartItem = state - 1;
       }
-      console.log(cartItem)
+      console.log(cartItem);
       return (state = cartItem);
 
     default:

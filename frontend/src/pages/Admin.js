@@ -85,7 +85,7 @@ const Admin = () => {
       }}
     >
       <Paper className={classes.paper} elevation={3}>
-        <form className={classes.form} onSubmit={handleSubmit}>
+        <form className={classes.form} onSubmit={handleSubmit} encType="multipart-form-data">
           <Grid container spacing={2}>
             <Input
               name="title"
