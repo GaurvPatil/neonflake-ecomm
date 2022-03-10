@@ -42,8 +42,43 @@ const  getAllProduct = async (req, res) => {
     }
   };
 
+
+  const updateProduct = async (req, res) => {
+    console.log(req.body)
+    try {
+      const { id: postID } = req.params;
+      const data = await product.findOneAndUpdate({ _id: postID }, req.body, {
+        new: true,
+        runValidators: true,
+      });
+      if (!data) {
+        return res.status(404).json({ msg: `No Post With ID: ${postID}` });
+      }
+      res.status(200).json({ id: postID, data: req.body });
+    } catch (error) {
+      res.status(500).json({ msg: error });
+    }
+  };
+
+
+  const   deleteProduct = async (req, res) => {
+    console.log(req)
+    try {
+      const { id: postID } = req.params;
+      const data = await product.findOneAndDelete({ _id: postID });
+      if (!data) {
+        return res.status(404).json({ msg: `No Post With ID: ${postID}` });
+      }
+      res.status(200).json({ data: null, status: "success" });
+    } catch (error) {
+      res.status(500).json({ msg: error });
+    }
+  };
+
   module.exports = {
     getAllProduct,
     createProduct,
     getSingleProduct,
+    updateProduct,
+    deleteProduct
   }

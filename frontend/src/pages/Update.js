@@ -4,7 +4,7 @@ import Input from "../components/Input";
 import * as api from "../api/index";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+import { useNavigate } from "react-router-dom";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Admin = () => {
+const Update = ({product}) => {
   const classes = useStyles();
   const initialState = {
     title: "",
@@ -40,6 +40,7 @@ const Admin = () => {
   };
 
   const [formData, setFormData] = useState(initialState);
+  const navigate = useNavigate()
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -50,15 +51,14 @@ const Admin = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const postRequest = async (category, _id) => {
+  const updateRequest = async (_id) => {
     const result = window.confirm("are you sure");
-    if (formData && result) {
+    if (result) {
       await api
-        .uploadProduct(formData)
-
+        .updateSingleProduct(_id)
         .then(() => {
           const notify = () =>
-            toast.success("Product Successfully Upload!", {
+            toast.success("Product Successfully Deleted!", {
               autoClose: 2000,
             });
 
@@ -67,7 +67,7 @@ const Admin = () => {
         .catch((err) => {
           console.log(err);
           const notify = () =>
-            toast.error(" Error!", {
+            toast.error("Server Error!", {
               autoClose: 2000,
             });
           notify();
@@ -75,7 +75,9 @@ const Admin = () => {
     }
   };
 
+
   return (
+    
     <Container
       component="main"
       maxWidth="xs"
@@ -84,12 +86,26 @@ const Admin = () => {
         marginBottom: "5rem",
       }}
     >
+        <div style={{ textAlign: "center" }}>
+        <Button
+          style={{ background: "green", fontWeight: "bold" }}
+          onClick={() => navigate("/adminhome", { replace: "true" })}
+        >
+          {" "}
+        Back{" "}
+        </Button>
+      </div>
       <Paper className={classes.paper} elevation={3}>
-        <form className={classes.form} onSubmit={handleSubmit} encType="multipart-form-data">
+        <form
+          className={classes.form}
+          onSubmit={handleSubmit}
+          encType="multipart-form-data"
+        >
           <Grid container spacing={2}>
             <Input
               name="title"
               label="Product name"
+              defaultvalue={formData.title}
               handleChange={handleChange}
               autoFocus
               half
@@ -97,6 +113,7 @@ const Admin = () => {
             <Input
               name="price"
               label="price"
+              defaultvalue={formData.price}
               handleChange={handleChange}
               autoFocus
               half
@@ -105,8 +122,8 @@ const Admin = () => {
             <Input
               name="description"
               label="description"
+              defaultvalue={formData.description}
               handleChange={handleChange}
-         
             />
 
             <input
@@ -116,8 +133,8 @@ const Admin = () => {
               multiple
               type="file"
               name="image"
-           
-              onChange = {handleChange}
+              defaultvalue={formData.image}
+              onChange={handleChange}
             />
             <label htmlFor="contained-button-file">
               <Button variant="contained" color="primary" component="span">
@@ -131,15 +148,16 @@ const Admin = () => {
             variant="contained"
             color="primary"
             className={classes.submit}
-            onClick={() => postRequest()}
+            onClick={() =>  updateRequest(product)}
           >
-            Upload{" "}
+            Update{" "}
           </Button>
         </form>
       </Paper>
       <ToastContainer />
     </Container>
+    
   );
 };
 
-export default Admin;
+export default Update;

@@ -40,7 +40,7 @@ export const signin = (formData, history) => async (dispatch) => {
    
     if (data.message === "admin") {
       try {
-        history("/admin", { replace: true });
+        history("/adminhome", { replace: true });
       } catch (error) {
         console.log(error);
       }

@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
-import MediaCard from "../components/Card";
 import * as api from "../api/index";
 import Loading from "../components/Loading";
 import { Pagination } from "@material-ui/lab";
 import { makeStyles } from "@material-ui/core";
-
+import AdminCard from "../components/AdminCard";
+import Button from "@material-ui/core/Button";
+import { useNavigate } from "react-router-dom";
 
 const useStyles = makeStyles({
   pagination: {
@@ -14,11 +15,12 @@ const useStyles = makeStyles({
   },
 });
 
-const Home = () => {
+const Adminhome = () => {
   const [product, setProduct] = useState([]);
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
   const classes = useStyles();
+  const navigate = useNavigate();
 
   const fetchingAllData = async (mounted) => {
     try {
@@ -52,10 +54,19 @@ const Home = () => {
   }
   return (
     <>
-      <MediaCard allProduct={newArray} />
+      <div style={{ textAlign: "center" }}>
+        <Button
+          style={{ background: "green", fontWeight: "bold" }}
+          onClick={() => navigate("/upload", { replace: "true" })}
+        >
+          {" "}
+          Upload New Product{" "}
+        </Button>
+      </div>
+      <AdminCard allProduct={newArray} />
       {/* pagination from material ui  */}
       <Pagination
-        count={parseInt(( product.length / 2.5).toFixed(0))}
+        count={parseInt((product.length / 2.5).toFixed(0))}
         style={{
           padding: 20,
           width: "100%",
@@ -73,4 +84,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Adminhome;
